@@ -137,6 +137,21 @@ paths:
       responses:
         200:
           description: List of players updated
+  /teams/{teamName}:
+    get:
+      parameters:
+        - in: path
+          name: teamName
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: List of specific teams
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Team'
 components:
   schemas:
     Competition:
