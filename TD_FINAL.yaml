@@ -1,0 +1,175 @@
+openapi: 3.0.3
+info:
+  title: STD23031 - TD FINAL
+  version: '1.0.0'
+servers:
+  - url: https://localhost.std23031.com
+paths:
+  /competitions:
+    post:
+      tags:
+        - Competition
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Competition'
+        required: true
+      responses:
+        201:
+          description: List of created competitions
+          content:
+            application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Competition'
+    get:
+      tags:
+        - Competition
+      200:
+        description: List of competitions
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Competition'
+  /teams:
+    post:
+      tags:
+        - Team
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                slogan:
+                  type: string
+        required: true
+      responses:
+        201:
+          description: List of created teams
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Team'
+    get:
+      tags:
+        - Team
+      responses:
+        200:
+          description: List of teams
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Team'
+  /teams/{teamName}/players:
+    post:
+      tags:
+        - Player
+      parameters:
+        - in: path
+          name: teamName
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Player'
+      responses:
+        201:
+          description: List of players added
+    get:
+      tags:
+        - Player
+      parameters:
+        - in: path
+          name: teamName
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: List of players
+          content:
+            applicatioin/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Player'
+  /teams/{teamName}/players/{playerName}:
+    put:
+      tags:
+        - Player
+      parameters:
+        - in: path
+          name: teamName
+          required: true
+          schema:
+            type: string
+        - in: path
+          name: playerName
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                  $ref: '#/components/schemas/Player'
+        required: true
+      responses:
+        200:
+          description: List of players updated
+components:
+  schemas:
+    Competition:
+      type: object
+      properties:
+        name:
+          type: string
+        country:
+          type: string
+    Team:
+      type: object
+      properties:
+        name:
+          type: string
+        slogan:
+          type: string
+        competitionList:
+          type: array
+          items:
+            $ref: '#/components/schemas/Competition'
+        players:
+          type: array
+          items:
+            $ref: '#/components/schemas/Player'
+    Player:
+      type: object
+      properties:
+        name:
+          type: string
+        number:
+          type: integer
+        strongFoot:
+          type: string
+          enum:
+            - Left
+            - Right
