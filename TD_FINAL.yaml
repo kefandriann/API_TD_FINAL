@@ -139,6 +139,8 @@ paths:
           description: List of players updated
   /teams/{teamName}:
     get:
+      tags:
+        - Team
       parameters:
         - in: path
           name: teamName
@@ -152,6 +154,23 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Team'
+  /players/{playerName}:
+    get:
+      tags:
+        - Player
+      parameters:
+        - in: path
+          name: playerName
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: List of specific players
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Player'
 components:
   schemas:
     Competition:
